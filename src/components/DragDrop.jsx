@@ -1,6 +1,7 @@
-    import React, { useState } from 'react'
+    import React, { useRef, useState } from 'react'
 
-    const DragDrop = () => {
+const DragDrop = () => {
+        const dragItem = useRef()
         const [data, setData] = useState(
             [
                 {
@@ -13,11 +14,16 @@
                     "age": 35
                 }
             ]
-        )
+    )
+    
+    const dragStart = (e) => {
+        dragItem.current = e.target.id;
+    }
 
         const row = data.map((item) => {
             return (
                 <tr
+                    onDragStart={(e) => dragStart(e)}
                 draggable
                 >
                 <td> {item.fullName} </td>
@@ -28,7 +34,7 @@
 
         
     return (
-        <div>
+        <>
             <table>
                 <thead>
                     <tr>
@@ -40,7 +46,7 @@
                     {React.Children.toArray(row)}
                 </tbody>
             </table>
-        </div>
+        </>
     )
     }
 
